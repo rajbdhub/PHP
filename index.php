@@ -3,15 +3,16 @@
 
 /*Indexing
 
-80-100  = A+
-75-79   = A
-70-74   = A-
-65-79   = B+
-60-64   = B
-55-59   = C+
-50-54   = C
-40-49   = D
-0-39    = Fail
+80-100          = A+
+75-79           = A
+70-74           = A-
+65-79           = B+
+60-64           = B
+55-59           = C+
+50-54           = C
+40-49           = D
+0-39            = Failed
+Others input    = Invalid Input!
 
 */
 
@@ -43,10 +44,10 @@ else if ($mark >= 40 && $mark <= 49){
     echo "D";
 }
 else if ($mark >= 0 && $mark <= 39){
-    echo "Fail";
+    echo "Failed";
 }
 else {
-    echo "Invalid Input";
+    echo "Invalid Input!";
 }
 
 
