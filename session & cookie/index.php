@@ -2,9 +2,10 @@
 
 session_start();
 
-if (isset($_SESSION['email'])){
+if (isset($_SESSION['email']) || isset($_COOKIE['click'])){
     header("location: admin.php");
 }
+
 
 
 define("EMAIL" , "raj@gmail.com");
@@ -14,11 +15,17 @@ if (isset($_POST['submit'])) {
 
     $email = $_POST['email'];
    $password = $_POST['password'];
+   $click = isset($_POST['click']) ? $_POST['click'] : "";
 
     if (EMAIL==$email && PASSWORD==$password){
 
         $_SESSION['email'] = EMAIL;
         $_SESSION['password'] = PASSWORD;
+
+        if (isset($click)){
+            setcookie(click, $email, time()+(60*24) );
+        }
+
 
         header("location: admin.php");
 
@@ -49,6 +56,9 @@ if (isset($_POST['submit'])) {
             <br>
             <lable for="password">Password</lable>
             <input type="password" id="password" placeholder="input password here" name="password">
+            <br>
+            <br>
+            <input class="click" type="checkbox" name="click">
             <br>
             <br>
             <lable><input type="submit" value="Submit" name="submit"></lable>
