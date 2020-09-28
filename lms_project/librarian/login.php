@@ -8,7 +8,6 @@ if (isset($_SESSION['email'])){
 if (isset($_POST['login'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $username = $_POST['username'];
 
     $result = mysqli_query($conn, "SELECT * FROM `libraian` WHERE `email` = '$email'  OR `username` = '$email'");
 

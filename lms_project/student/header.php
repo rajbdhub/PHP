@@ -3,6 +3,11 @@ require_once '../dbcon.php';
 $p = explode('/', $_SERVER['PHP_SELF']);
 $page = end($p);
 
+$email = $_SESSION['email'];
+
+$result = mysqli_query($conn, "SELECT * FROM `students` WHERE `email` = '$email'");
+$row = mysqli_fetch_assoc($result);
+
 
 ?>
 
@@ -139,8 +144,8 @@ $page = end($p);
                         <img alt="profile photo" src="../assets/images/avatar/avatar_user.jpg" />
                     </div>
                     <div class="user-info">
-                        <span class="user-name">Jane Doe</span>
-                        <span class="user-profile">Admin</span>
+                        <span class="user-name"><?= $row['firstname'].' '.$row['lastname']?></span>
+                        <span class="user-profile">Student</span>
                     </div>
                     <i class="fa fa-plus icon-open" aria-hidden="true"></i>
                     <i class="fa fa-minus icon-close" aria-hidden="true"></i>
@@ -148,7 +153,7 @@ $page = end($p);
                 <div class="user-options dropdown-box">
                     <div class="drop-content basic">
                         <ul>
-                            <li> <a href="pages_user-profile.html"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
+                            <li class="<?= $page == 'student-profile.php' ? '' : '' ?>" > <a href="student-profile.php" ><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
                         </ul>
                     </div>
                 </div>
@@ -207,47 +212,108 @@ $page = end($p);
                     <div class="row">
                         <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
                         <!--WIDGETBOX-->
+                        <!--WIDGETBOX-->
                         <div class="col-sm-12 col-md-3">
                             <div class="panel widgetbox wbox-2 bg-scale-0">
-                                <a href="#">
+                                <a href="">
                                     <div class="panel-content">
                                         <div class="row">
                                             <div class="col-xs-4">
-                                                <span class="icon fa fa-globe color-darker-1"></span>
+                                                <span class="icon fa fa-lock color-darker-1"></span>
                                             </div>
+                                            <?php
+
+                                            $librarian = mysqli_query($conn, "SELECT * FROM `libraian`");
+                                            $total_librarian = mysqli_num_rows($librarian);
+
+                                            ?>
                                             <div class="col-xs-4">
-                                                <h4 class="subtitle color-darker-1">Views</h4>
-                                                <h1 class="title color-primary"> 154.609</h1>
+                                                <h4 class="subtitle color-darker-1">Total Librarian</h4>
+                                                <h1 class="title color-primary"> <?= $total_librarian ?></h1>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="panel widgetbox wbox-2 bg-lighter-2 color-light">
-                                <a href="#">
+                                <a href="students.php">
                                     <div class="panel-content">
                                         <div class="row">
                                             <div class="col-xs-4">
                                                 <span class="icon fa fa-user color-darker-2"></span>
                                             </div>
+                                            <?php
+
+                                            $student = mysqli_query($conn, "SELECT * FROM `students`");
+                                            $total_student = mysqli_num_rows($student);
+
+                                            ?>
                                             <div class="col-xs-4">
-                                                <h4 class="subtitle color-darker-2">New Users</h4>
-                                                <h1 class="title color-w"> 105</h1>
+                                                <h4 class="subtitle color-darker-2">Total Student</h4>
+                                                <h1 class="title color-w"> <?= $total_student ?></h1>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="panel widgetbox wbox-2 bg-darker-2 color-light">
+                                <a href="manage-books.php">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-book color-lighter-1"></span>
+                                            </div>
+                                            <?php
+
+                                            $book = mysqli_query($conn, "SELECT * FROM `books`");
+                                            $total_book = mysqli_num_rows($book);
+
+                                            ?>
+                                            <div class="col-xs-4">
+                                                <h4 class="subtitle color-lighter-1">Book Type</h4>
+                                                <h1 class="title color-light"> <?= $total_book ?></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel widgetbox wbox-2 bg-warning color-light">
+                                <a href="manage-books.php">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-book color-lighter-1"></span>
+                                            </div>
+                                            <?php
+
+                                            $totalbook = mysqli_query($conn, "SELECT SUM(`book_quantity`) as total FROM `books`");
+                                            $total_qun = mysqli_fetch_assoc($totalbook);
+
+                                            ?>
+                                            <div class="col-xs-4">
+                                                <h4 class="subtitle color-lighter-1">Book Quantity</h4>
+                                                <h1 class="title color-light"> <?= $total_qun['total']; ?></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel widgetbox wbox-2 bg-primary color-light">
                                 <a href="#">
                                     <div class="panel-content">
                                         <div class="row">
                                             <div class="col-xs-4">
-                                                <span class="icon fa fa-envelope color-lighter-1"></span>
+                                                <span class="icon fa fa-book color-lighter-1"></span>
                                             </div>
+                                            <?php
+
+                                            $totalbook = mysqli_query($conn, "SELECT SUM(`available_quantity`) as total FROM `books`");
+                                            $total_qun = mysqli_fetch_assoc($totalbook);
+
+                                            ?>
                                             <div class="col-xs-4">
-                                                <h4 class="subtitle color-lighter-1">New Notifications</h4>
-                                                <h1 class="title color-light"> 124</h1>
+                                                <h4 class="subtitle color-lighter-1">Available Book</h4>
+                                                <h1 class="title color-light"> <?= $total_qun['total']; ?></h1>
                                             </div>
                                         </div>
                                     </div>

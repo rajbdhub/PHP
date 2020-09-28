@@ -10,7 +10,13 @@ $query = mysqli_query($conn, "SELECT * FROM `students`" );
 
         <div class="row animated fadeInUp">
             <div class="col-sm-12">
-                <h4 class="section-subtitle"><b>Students List:</b></h4>
+                <div class="pull-left">
+                    <h4 class="section-subtitle"><b>Students List:</b></h4>
+                </div>
+                <div class="pull-right">
+                    <a href="print-students.php" target="_blank"><i class="fa fa-print btn btn-warning"> Print</i></a>
+                </div>
+                <div class="clearfix"></div>
                 <div class="panel">
                     <div class="panel-content">
                         <div class="table-responsive">
